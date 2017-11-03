@@ -5,44 +5,44 @@ services:
     build: alpine
     image: yadgen/alpine
 
-  # nginx:
-  #   build: nginx
-  #   image: yadgen/nginx
-  #   restart: always
-  #   volumes:
-  #     - ../conf/nginx/nginx.conf:/etc/nginx/nginx.conf
-  #     - ../conf/nginx/conf.d:/etc/nginx/conf.d
-  #     - ../log/nginx:/var/log/nginx
-  #     - ../html:/var/www/html
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   links:
-  #     - php
-  #   depends_on:
-  #     - alpine
-  #     - php
-  #     - mysql
-  #     - redis
-  #     - gogs
+  nginx:
+    build: nginx
+    image: yadgen/nginx
+    restart: always
+    volumes:
+      - ../conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ../conf/nginx/conf.d:/etc/nginx/conf.d
+      - ../log/nginx:/var/log/nginx
+      - ../html:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+    depends_on:
+      - alpine
+      - php
+      - mysql
+      - redis
+      - gogs
 
-  # php:
-  #   build: php
-  #   image: yadgen/php
-  #   restart: always
-  #   volumes:
-  #     - ../conf/php/php.ini:/etc/php7/php.ini
-  #     - ../conf/php/php-fpm.conf:/etc/php7/php-fpm.conf
-  #     - ../conf/php/php-fpm.d:/etc/php7/php-fpm.d
-  #     - ../log/php:/var/log/php
-  #     - ../html:/var/www/html
-  #   ports:
-  #     - "9000:9000"
-  #   links:
-  #     - mysql
-  #     - redis
-  #   depends_on:
-  #     - alpine
+  php:
+    build: php
+    image: yadgen/php
+    restart: always
+    volumes:
+      - ../conf/php/php.ini:/etc/php7/php.ini
+      - ../conf/php/php-fpm.conf:/etc/php7/php-fpm.conf
+      - ../conf/php/php-fpm.d:/etc/php7/php-fpm.d
+      - ../log/php:/var/log/php
+      - ../html:/var/www/html
+    ports:
+      - "9000:9000"
+    links:
+      - mysql
+      - redis
+    depends_on:
+      - alpine
 
   mysql:
     build: mysql
@@ -63,32 +63,32 @@ services:
     depends_on:
       - alpine
 
-  # redis:
-  #   build: redis
-  #   image: yadgen/redis
-  #   restart: always
-  #   volumes:
-  #     - ../conf/redis/redis_6379.conf:/etc/redis_6379.conf
-  #     - ../data/redis:/var/data/redis
-  #     - ../log/redis:/var/log/redis
-  #   ports:
-  #     - "6379:6379"
-  #   depends_on:
-  #     - alpine
+  redis:
+    build: redis
+    image: yadgen/redis
+    restart: always
+    volumes:
+      - ../conf/redis/redis_6379.conf:/etc/redis_6379.conf
+      - ../data/redis:/var/data/redis
+      - ../log/redis:/var/log/redis
+    ports:
+      - "6379:6379"
+    depends_on:
+      - alpine
 
-  # gogs:
-  #   build: gogs
-  #   image: yadgen/gogs
-  #   restart: always
-  #   volumes:
-  #     - ../conf/gogs/app.ini:/usr/bin/custom/conf/app.ini
-  #     - ../data/gogs:/var/lib/gogs
-  #     - ../log/gogs:/var/log/gogs
-  #   ports:
-  #     - "3000:3000"
-  #     - "10022:22"
-  #   links:
-  #     - mysql
-  #   depends_on:
-  #     - alpine
-  #     - mysql
+  gogs:
+    build: gogs
+    image: yadgen/gogs
+    restart: always
+    volumes:
+      - ../conf/gogs/app.ini:/usr/bin/custom/conf/app.ini
+      - ../data/gogs:/var/lib/gogs
+      - ../log/gogs:/var/log/gogs
+    ports:
+      - "3000:3000"
+      - "10022:22"
+    links:
+      - mysql
+    depends_on:
+      - alpine
+      - mysql
